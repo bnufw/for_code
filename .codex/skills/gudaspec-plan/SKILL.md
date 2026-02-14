@@ -23,7 +23,7 @@ description: Refine OpenSpec proposals into zero-decision, executable task flows
 
 2. Run `/opsx:continue <proposal_id>` then follow it to review the current specs and improve quality of specs.
 
-3. During review, invoke **gemini** to detect remaining ambiguities:
+3. During review, invoke **skill__collaborating-with-gemini-cli** to detect remaining ambiguities:
    - Prompt gemini:
      - "Identify implicit assumptions in proposal <proposal_id>. For each assumption, specify: [ASSUMPTION] <description> → [EXPLICIT CONSTRAINT NEEDED] <concrete specification>."
    - **Anti-Pattern Detection** (flag and reject):
@@ -34,7 +34,7 @@ description: Refine OpenSpec proposals into zero-decision, executable task flows
      - Explicit technology choices with parameters (e.g., "JWT with accessToken TTL=15min, refreshToken TTL=7days")
      - Concrete algorithm selections with configurations (e.g., "bcrypt with cost factor=12")
      - Precise behavioral rules (e.g., "Lock account for 30min after 5 failed login attempts")
-   - Use **interactive_feedback** for ANY ambiguity, NEVER assume or guess.
+   - Use **mcp__ask_user_questions** for ANY ambiguity, NEVER assume or guess.
    - Iterate with user until ALL ambiguities are resolved into explicit constraints.
 
 4. After clarifying requirements, modify the spec documents.
@@ -42,7 +42,7 @@ description: Refine OpenSpec proposals into zero-decision, executable task flows
      - `openspec validate <proposal_id> --strict`
    - Ensure the format is correct and no issues remain.
 
-5. When backend logic modification requirements are identified, invoke **gemini** to derive testable invariants:
+5. When backend logic modification requirements are identified, invoke **skill__collaborating-with-gemini-cli** to derive testable invariants:
    - Prompt gemini:
      - "Analyze proposal <proposal_id> for system properties. Define: [PROPERTY] <name> | [DEFINITION] <formal description> | [BOUNDARY CONDITIONS] <edge cases to test> | [COUNTEREXAMPLE GENERATION] <approach>."
    - **PBT Property Categories to Extract**:

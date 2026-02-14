@@ -76,7 +76,7 @@ description: Transform user requirements into constraint sets through parallel e
 
 6. **User Interaction for Ambiguity Resolution**
    - Compile prioritized list of open questions from aggregated reports.
-   - Use `AskUserQuestions` tool to present questions systematically:
+   - Use `mcp__ask_user_questions` tool to present questions systematically:
      * Group related questions together.
      * Provide context for each question.
      * Suggest default answers when applicable.
@@ -90,6 +90,6 @@ description: Transform user requirements into constraint sets through parallel e
 **Reference**
 - Inspect codebase structure: `ls -R` or `mcp__auggie-mcp__codebase-retrieval`
 - Validate subagent outputs conform to template before aggregation.
-- Use `AskUserQuestions` for ANY ambiguity—do not assume or guess.
+- Use `mcp__ask_user_questions` for ANY ambiguity—do not assume or guess.
 - Always base judgments on project codes, strictly prohibiting the use of general knowledge for speculation. It is permissible to indicate uncertainty to users.
 <!-- GUDASPEC:RESEARCH:END -->
