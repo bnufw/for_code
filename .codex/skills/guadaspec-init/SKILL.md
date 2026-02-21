@@ -27,7 +27,7 @@ description: Initialize OpenSpec environment for the current project.
 3. **Initialize OpenSpec for Current Project**
    - Run the initialization command:
      ```bash
-     openspec init --tools claude
+     openspec init --tools codex
      ```
    - Verify that `openspec/` directory structure is created successfully.
    - Report any initialization errors and suggest remediation steps.

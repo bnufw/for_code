@@ -11,7 +11,7 @@ description: Refine OpenSpec proposals into zero-decision, executable task flows
 - Strictly adhere to **OpenSpec** rules when writing **standardized spec-structured projects**.
 - The goal of this phase is to eliminate **ALL** decision points from the task flow—implementation should be pure mechanical execution.
 - Do not proceed to implementation until every ambiguity is resolved and every constraint is explicitly documented.
-- Model collaboration is mandatory: use **gemini** to surface blind spots and conflicting assumptions.
+- Model collaboration is mandatory: use **skill__collaborating-with-gemini-cli** to surface blind spots and conflicting assumptions.
 - Every requirement must have Property-Based Testing (PBT) properties defined—focus on invariants, not just example-based tests.
 - If constraints cannot be fully specified, escalate back to the user rather than making assumptions.
 
@@ -24,7 +24,7 @@ description: Refine OpenSpec proposals into zero-decision, executable task flows
 2. Run `/opsx:continue <proposal_id>` then follow it to review the current specs and improve quality of specs.
 
 3. During review, invoke **skill__collaborating-with-gemini-cli** to detect remaining ambiguities:
-   - Prompt gemini:
+   - Prompt:
      - "Identify implicit assumptions in proposal <proposal_id>. For each assumption, specify: [ASSUMPTION] <description> → [EXPLICIT CONSTRAINT NEEDED] <concrete specification>."
    - **Anti-Pattern Detection** (flag and reject):
      - Information collection without decision boundaries (e.g., "JWT vs OAuth2 vs session—all viable")
