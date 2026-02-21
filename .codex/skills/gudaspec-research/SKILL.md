@@ -8,7 +8,7 @@ description: Transform user requirements into constraint sets through parallel e
 - If the project is detected to lack `./openspec/` dir, prompt the user to initialize the project using `/gudaspec:init`.
 - Research produces **constraint sets**, not information dumps. Each constraint narrows the solution space.
 - Constraints tell subsequent stages "don't consider this direction," enabling mechanical execution without decisions.
-- The output is "約束集合 + 可验证的成功判据" (constraint sets + verifiable success criteria).
+- The output is "约束集合 + 可验证的成功判据" (constraint sets + verifiable success criteria).
 - Eliminate ambiguity through structured exploration and user interaction.
 - Strictly adhere to **OpenSpec** rules when writing **standardized spec-structured projects**.
 
@@ -76,7 +76,7 @@ description: Transform user requirements into constraint sets through parallel e
 
 6. **User Interaction for Ambiguity Resolution**
    - Compile prioritized list of open questions from aggregated reports.
-   - Use `mcp__ask_user_questions` tool to present questions systematically:
+   - Use `skill__ask_user_question` tool to present questions systematically:
      * Group related questions together.
      * Provide context for each question.
      * Suggest default answers when applicable.
@@ -90,6 +90,6 @@ description: Transform user requirements into constraint sets through parallel e
 **Reference**
 - Inspect codebase structure: `ls -R` or `mcp__auggie-mcp__codebase-retrieval`
 - Validate subagent outputs conform to template before aggregation.
-- Use `mcp__ask_user_questions` for ANY ambiguity—do not assume or guess.
+- Use `skill__ask_user_question` for ANY ambiguity—do not assume or guess.
 - Always base judgments on project codes, strictly prohibiting the use of general knowledge for speculation. It is permissible to indicate uncertainty to users.
 <!-- GUDASPEC:RESEARCH:END -->
