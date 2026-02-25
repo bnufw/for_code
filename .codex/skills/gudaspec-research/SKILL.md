@@ -48,7 +48,7 @@ description: Transform user requirements into constraint sets through parallel e
      "existing_structures": ["list of key structures/patterns found"],
      "existing_conventions": ["list of conventions/standards in use"],
      "constraints_discovered": ["list of hard constraints that limit solution space"],
-     "open_questions": ["list of ambiguities requiring user input"],
+     "open_questions": ["list of ambiguities requiring user input"],  
      "dependencies": ["list of dependencies on other modules/systems"],
      "risks": ["list of potential risks or blockers"],
      "success_criteria_hints": ["observable behaviors that indicate success"]
