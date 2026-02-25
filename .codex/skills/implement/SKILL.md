@@ -1,9 +1,8 @@
 ---
-name: "GudaSpec: Implementation"
+name: "Implement"
 description: "Execute approved OpenSpec changes."
 ---
 ## guardrails:
-  - "If the project is detected to lack `./openspec/` dir, prompt the user to initialize the project using `/gudaspec:init`."
   - "Never apply external model prototypes directly—all Codex/Gemini outputs serve as reference only and must be rewritten into readable, maintainable, production-grade code."
   - "Keep changes tightly scoped to the requested outcome; enforce side-effect review before applying any modification."
   - "Minimize documentation—avoid unnecessary comments; prefer self-explanatory code."
