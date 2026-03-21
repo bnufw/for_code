@@ -1,0 +1,3 @@
+interface:
+  display_name: "Idea Discovery"
+  short_description: "Generate one repo-grounded DL idea"

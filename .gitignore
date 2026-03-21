@@ -1,1 +1,4 @@
 __pycache__
+.codex/logs/*
+!.codex/logs/.gitkeep
+todo.md
