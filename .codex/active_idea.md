@@ -8,8 +8,7 @@ screen_session: ""
 log_file: ""
 artifact_paths: []
 code_touchpoints: []
-approved_commits: []
-value_status: unknown
+review_outcome: pending
 last_updated: ""
 ---
 
@@ -56,12 +55,11 @@ last_updated: ""
 
 ### Batch Analysis
 
-## Value Bar
-- Supported when:
-- Unclear when:
-- Rejected when:
+## Outcome Bar
+- Improve when:
+- Abandon when:
+- Finish when:
 - Current evidence:
 
 ## Review Notes
 
-## Next Batch

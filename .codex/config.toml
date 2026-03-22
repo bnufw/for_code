@@ -14,7 +14,7 @@ description = "Designs the full paper experiment program and the first batch ana
 config_file = "agents/analysis-planner.toml"
 
 [agents.experiment-designer]
-description = "Turns one active idea into a repo-native current batch, new script plan, and artifact layout."
+description = "Turns one active idea into a repo-native current batch, a new script plan, and an artifact layout."
 config_file = "agents/experiment-designer.toml"
 
 [agents.idea-critic]
@@ -22,5 +22,9 @@ description = "Challenges the idea with overlap checks, confounders, and a sharp
 config_file = "agents/idea-critic.toml"
 
 [agents.result-judge]
-description = "Reads logs and result files, then returns continue, terminate, or wait plus value gating."
+description = "Reads completed-batch evidence and returns improve, abandon, or finish."
 config_file = "agents/result-judge.toml"
+
+[agents.improvement-planner]
+description = "Turns a completed batch into evidence-backed improvement directions and clarification rounds."
+config_file = "agents/improvement-planner.toml"

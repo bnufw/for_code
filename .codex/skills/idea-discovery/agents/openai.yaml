@@ -1,3 +1,4 @@
 interface:
   display_name: "Idea Discovery"
-  short_description: "Generate one oral-grade DL idea with method and experiment design"
+  short_description: "Generate one oral-grade DL idea plus the first formal batch"
+

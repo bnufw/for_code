@@ -1,3 +1,4 @@
 interface:
   display_name: "Idea Review"
-  short_description: "Review results, judge paper value, and gate commits"
+  short_description: "Review one completed batch and choose improve, abandon, or finish"
+
