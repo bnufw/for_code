@@ -26,40 +26,55 @@ Always inspect these sources before proposing anything:
 - Produce one idea only.
 - Prefer local repo evidence over external search.
 - Use Exa only when local evidence is still insufficient or when mechanism cross-check matters.
+- Use the fixed helper-agent sequence for every discovery pass after local repo reading:
+  1. `repo-exa-scout`
+  2. `paper-architect`
+  3. `analysis-planner`
+  4. `experiment-designer`
+  5. `idea-critic`
+- Keep helper-agent outputs transient in the turn context. Do not create repo files for intermediate drafts. Persist only the final `.codex/active_idea.md`.
 - Ask at most one batched `request_user_input` round when critical baseline fields are missing or conflicting.
-- Use that clarification round only for `baseline_commit`, main metric, baseline value, and `reference_command` when the repo does not settle them cleanly.
-- If the oral-grade structure cannot be supported after repo reading and helper-agent pressure tests, stop and list the missing support instead of writing `.codex/active_idea.md`.
+- Use that clarification round only after `repo-exa-scout` returns baseline-contract candidates, and only for `baseline_commit`, main metric, baseline value, and `reference_command` when the repo does not settle them cleanly.
+- If any required helper agent fails, returns missing support, or leaves a required section underspecified, stop and list the blockers instead of writing `.codex/active_idea.md`.
+- If `idea-critic` does not return `VERDICT: PASS`, stop and list the blockers instead of writing `.codex/active_idea.md`.
 
 ## Helper Agents
 
-Use these helpers when the repository is non-trivial or when the draft would otherwise stay underspecified:
-- `repo-exa-scout`: repo-first grounding, observable gap scan, baseline-contract recovery.
-- `paper-architect`: single thesis, three innovation points, method sketch, theory hook, hyperparameter discipline.
-- `analysis-planner`: full paper experiment program plus first-batch analysis layout.
-- `experiment-designer`: repo-native current batch, new script plan, artifact layout.
-- `idea-critic`: overlap review, confounder review, and the minimal threshold that separates improve, abandon, and finish.
+Discovery always calls these helpers in this order:
+- `repo-exa-scout`: repo-first grounding, observable gap scan, baseline-contract recovery, thesis-seed proposal.
+- `paper-architect`: oral-grade thesis shaping, three coordinated innovation points, method sketch, theory hook, hyperparameter discipline.
+- `analysis-planner`: full paper experiment program with current-batch analysis layout.
+- `experiment-designer`: repo-native current batch, one new script plan, artifact layout, and train-command shape.
+- `idea-critic`: pass or reject pressure check on overlap, confounders, oral-grade support, and stop-rule sharpness.
 
 ## Process
 
-1. Read `.codex/baseline_commit.txt` and establish the baseline anchor.
-2. Recover the baseline contract:
+1. Read all required local materials from `Read First`, then establish the baseline anchor from `.codex/baseline_commit.txt`.
+2. Call `repo-exa-scout` with the local findings so it returns:
+   - one thesis seed,
+   - one baseline-contract candidate,
+   - code touchpoints,
+   - measurable thesis phenomena,
+   - overlap avoidance against `experience.md`.
+3. Recover the locked baseline contract:
    - main metric name,
    - strongest known baseline value,
    - one repo-native reference command,
    - result locator.
-3. If any of those fields are missing or conflicting, use one batched `request_user_input` round to confirm them.
-4. Read `experience.md` and exclude repeated directions.
-5. Use `repo-exa-scout` when the repo needs help surfacing a thesis seed, an observable phenomenon, or missing baseline details.
-6. Use `paper-architect` to turn that seed into an oral-grade paper skeleton.
-7. Use `analysis-planner` to define the full experiment program. It must cover:
+4. If any of those fields are missing or conflicting after `repo-exa-scout`, use one batched `request_user_input` round to confirm them.
+5. Call `paper-architect` with the locked baseline contract, thesis seed, code touchpoints, and repo constraints. Require it to return an oral-grade method skeleton, exactly three innovation points, at most two primary hyperparameters, and an explicit oral-grade support argument.
+6. If `paper-architect` returns missing support or fails to make the oral-grade case, stop and list the blockers.
+7. Call `analysis-planner` to define the full experiment program. It must cover:
    - main results,
    - component ablations,
    - mechanism analysis,
    - boundary and cost analysis.
-8. Use `experiment-designer` to define the first formal batch around one new experiment script such as `scripts/run_<idea-id>_b01.sh`.
-9. Use `idea-critic` to sharpen confounders, overlap checks, and the outcome thresholds.
-10. Overwrite `.codex/active_idea.md` only if all hard rules are satisfied.
-11. Present a concise summary to the user.
+8. If `analysis-planner` cannot fill any required experiment family or current-batch analysis need, stop and list the blockers.
+9. Call `experiment-designer` to define the first formal batch around one new experiment script such as `scripts/run_<idea-id>_b01.sh`. Require one script path, one formal experiment list, one batch analysis list, artifact layout, and planned train command.
+10. If `experiment-designer` leaves the command shape, result locator, or batch contents underspecified, stop and list the blockers.
+11. Call `idea-critic` on the combined proposal. Require `VERDICT: PASS` plus sharper confounder controls, paper-readiness gap checks, and stop-rule refinements.
+12. Overwrite `.codex/active_idea.md` only if all hard rules are satisfied and `idea-critic` returns `VERDICT: PASS`.
+13. Present a concise summary to the user.
 
 ## Required Writeback
 
@@ -120,4 +135,3 @@ The user-facing summary should contain:
 - planned experiment script and formal run command, or the exact missing fields,
 - current batch experiments and batch analysis items,
 - one sentence on why this differs from failed ideas already recorded in `experience.md`.
-

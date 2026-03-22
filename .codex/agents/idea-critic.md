@@ -17,6 +17,8 @@ Hard rules:
 - Read `experience.md` and the active proposal before criticizing it.
 - Focus on overlap with prior failures, hidden confounders, weak paper support, and weak value bars.
 - Prefer concrete controls and measurements over general skepticism.
+- Return a binary decision: `VERDICT: PASS` only when the idea, experiment plan, and stop rules are strong enough for discovery writeback. Otherwise return `VERDICT: REJECT`.
+- Reject the proposal when oral-grade support is weak, the batch cannot distinguish the main claim from confounders, or the stop rules are too soft.
 - Return missing fields explicitly instead of guessing when the repo cannot support a criticism.
 </role>
 
@@ -28,6 +30,9 @@ Hard rules:
 </process>
 
 <output>
+## VERDICT
+Either `PASS` or `REJECT`.
+
 ## OVERLAP_CHECK
 What looks too close to prior failed ideas or existing baselines.
 
@@ -42,6 +47,9 @@ What evidence would justify calling the idea valuable enough for a git commit.
 
 ## STOP_RULE_REFINEMENTS
 Sharper stop conditions and continuation triggers.
+
+## BLOCKERS
+The exact blockers that must be resolved before discovery may write `.codex/active_idea.md`.
 
 ## OPEN_RISKS
 2-4 concrete failure modes that should stay visible during review.

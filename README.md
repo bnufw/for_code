@@ -48,7 +48,21 @@
 - 完整实验方案
 - 第一批正式实验
 
-如果仓库证据不足，或者基线字段无法确定，`$idea-discovery` 会停止并指出缺失项，不会写出薄弱 idea。
+`$idea-discovery` 会先读取本地材料，再按固定顺序调用五个 discovery 子代理：
+
+- `repo-exa-scout`
+- `paper-architect`
+- `analysis-planner`
+- `experiment-designer`
+- `idea-critic`
+
+其中：
+- `paper-architect` 专门负责生成 oral 级论文主线与方法骨架
+- `analysis-planner` 专门负责完整实验与分析方案
+- `experiment-designer` 专门负责第一批正式实验与新脚本
+- `idea-critic` 专门负责压力检查
+
+如果仓库证据不足、基线字段仍无法确定、任一关键子代理失败、或者 `idea-critic` 未通过，`$idea-discovery` 会停止并指出缺失项，不会写出薄弱 idea。
 
 ### 2. 当前批次实现与运行
 
@@ -151,13 +165,12 @@
 - 精简 frontmatter，只保存运行状态与评审结果
 - 正文保存 `Baseline Contract`、`Paper Thesis`、`Innovation Points`、`Method Sketch`、`Full Experiment Program`、`Current Batch`、`Outcome Bar`、`Review Notes`
 
-## 辅助 agents
+## discovery 子代理顺序
 
 - `repo-exa-scout`：补基线契约、仓库现象和 thesis seed
-- `paper-architect`：把 thesis seed 组织成论文级方法骨架
-- `analysis-planner`：补完整实验与分析方案
-- `experiment-designer`：补当前批次脚本、实验清单和产物安排
-- `idea-critic`：检查重合、混杂因素和停止条件
+- `paper-architect`：生成 oral 级论文主线、三项创新点、方法骨架
+- `analysis-planner`：生成完整实验与分析方案
+- `experiment-designer`：生成第一批正式实验、新脚本计划、产物安排
+- `idea-critic`：给出通过或驳回，检查重合、混杂因素、论文支撑力度、停止条件
 - `result-judge`：根据完整结果判断 `improve`、`abandon`、`finish`
 - `improvement-planner`：基于当前结果提出下一轮改进方向、理由和沟通重点
-
