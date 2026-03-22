@@ -2,6 +2,7 @@
 import argparse
 import re
 import shutil
+import subprocess
 import sys
 from pathlib import Path
 
@@ -35,6 +36,13 @@ def resolve_target(repo_root: Path, raw: str) -> Path:
     return candidate
 
 
+def relabel(path: Path, repo_root: Path) -> str:
+    try:
+        return str(path.relative_to(repo_root))
+    except ValueError:
+        return str(path)
+
+
 def delete_target(path: Path) -> str:
     if not path.exists():
         return "missing"
@@ -45,6 +53,33 @@ def delete_target(path: Path) -> str:
     return "removed-file"
 
 
+def is_tracked(repo_root: Path, path: Path) -> bool:
+    rel = relabel(path, repo_root)
+    result = subprocess.run(
+        ["git", "ls-files", "--error-unmatch", "--", rel],
+        cwd=repo_root,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+        check=False,
+    )
+    return result.returncode == 0
+
+
+def restore_tracked(repo_root: Path, path: Path) -> str:
+    rel = relabel(path, repo_root)
+    result = subprocess.run(
+        ["git", "restore", "--worktree", "--", rel],
+        cwd=repo_root,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.PIPE,
+        text=True,
+        check=False,
+    )
+    if result.returncode != 0:
+        raise RuntimeError(result.stderr.strip() or f"git restore failed for {rel}")
+    return "restored-tracked"
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Clean failed idea artifacts recorded in .codex/active_idea.md")
     parser.add_argument("--active-file", default=".codex/active_idea.md", help="Path to the active idea markdown file")
@@ -52,39 +87,56 @@ def main() -> int:
     args = parser.parse_args()
 
     active_file = Path(args.active_file)
-    repo_root = Path.cwd()
+    repo_root = Path.cwd().resolve()
     state = load_state(active_file)
 
-    raw_targets = []
+    restore_targets = []
+    code_touchpoints = state.get("code_touchpoints") or []
+    if not isinstance(code_touchpoints, list):
+        raise ValueError("code_touchpoints must be a list")
+    restore_targets.extend(str(item).strip() for item in code_touchpoints if str(item).strip())
+
+    experiment_script = state.get("experiment_script")
+    if isinstance(experiment_script, str) and experiment_script.strip():
+        restore_targets.append(experiment_script.strip())
+
+    artifact_targets = []
     log_file = state.get("log_file")
     if isinstance(log_file, str) and log_file.strip():
-        raw_targets.append(log_file.strip())
+        artifact_targets.append(log_file.strip())
 
     artifact_paths = state.get("artifact_paths") or []
     if not isinstance(artifact_paths, list):
         raise ValueError("artifact_paths must be a list")
-    raw_targets.extend(str(item).strip() for item in artifact_paths if str(item).strip())
-
-    seen = set()
-    targets = []
-    for raw in raw_targets:
-        resolved = resolve_target(repo_root, raw)
-        if resolved not in seen:
-            seen.add(resolved)
-            targets.append((raw, resolved))
+    artifact_targets.extend(str(item).strip() for item in artifact_paths if str(item).strip())
 
     mode = "EXECUTE" if args.execute else "DRY_RUN"
     print(f"MODE={mode}")
-    if not targets:
-        print("No cleanup targets recorded.")
-        return 0
 
-    for raw, resolved in targets:
+    seen_restore = set()
+    for raw in restore_targets:
+        path = resolve_target(repo_root, raw)
+        if path in seen_restore:
+            continue
+        seen_restore.add(path)
+        tracked = is_tracked(repo_root, path)
         if args.execute:
-            status = delete_target(resolved)
+            status = restore_tracked(repo_root, path) if tracked else delete_target(path)
         else:
-            status = "would-remove" if resolved.exists() else "missing"
-        print(f"{status}\t{raw}\t{resolved}")
+            status = "would-restore-tracked" if tracked else ("would-remove" if path.exists() else "missing")
+        print(f"{status}\t{raw}\t{path}")
+
+    seen_artifacts = set()
+    for raw in artifact_targets:
+        path = resolve_target(repo_root, raw)
+        if path in seen_artifacts:
+            continue
+        seen_artifacts.add(path)
+        if args.execute:
+            status = delete_target(path)
+        else:
+            status = "would-remove" if path.exists() else "missing"
+        print(f"{status}\t{raw}\t{path}")
 
     return 0
 

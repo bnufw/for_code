@@ -2,37 +2,66 @@
 idea_id: ""
 status: idle
 baseline_commit: ""
-baseline_metric_name: ""
-baseline_metric_value: null
-target_lift: ""
 train_command: ""
-next_train_command: ""
-result_locator: ""
-idea_commits: []
-latest_idea_commit: ""
+experiment_script: ""
 screen_session: ""
 log_file: ""
 artifact_paths: []
 code_touchpoints: []
-review_decision: ""
+approved_commits: []
+value_status: unknown
 last_updated: ""
 ---
 
 # Active Idea
 
-## Goal
+## Baseline Contract
+- Metric:
+- Baseline value:
+- Target lift:
+- Reference command:
+- Result locator:
 
-## Hypothesis
+## Paper Thesis
 
-## Why This Might Beat Baseline
+## Innovation Points
+1.
+2.
+3.
+
+## Method Sketch
+### Core mechanism
+
+### Theory hook
+
+## Primary Hyperparameters
+- Hyperparameter 1:
+- Hyperparameter 2:
 
 ## Planned Code Changes
 
-## Stop Rule
-- Metric:
-- Minimum lift:
-- Terminate when:
+## Full Experiment Program
+### Main Results
+
+### Component Ablations
+
+### Mechanism Analysis
+
+### Boundary and Cost Analysis
+
+## Current Batch
+### Script
+
+### Formal Experiments
+
+### Batch Analysis
+
+## Value Bar
+- Supported when:
+- Unclear when:
+- Rejected when:
+- Current evidence:
 
 ## Review Notes
 
-## Next Experiment
+## Next Batch

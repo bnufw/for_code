@@ -10,5 +10,8 @@ Append one section per terminated idea.
 - Related commits:
 - Method summary:
 - Code touchpoints:
+- Experiment scripts:
 - Key metrics:
+- Analysis summary:
+- Observed insight:
 - Termination reason:

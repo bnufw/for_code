@@ -1,3 +1,3 @@
 interface:
   display_name: "Idea Review"
-  short_description: "Review results and decide next step"
+  short_description: "Review results, judge paper value, and gate commits"
