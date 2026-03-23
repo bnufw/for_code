@@ -56,9 +56,11 @@
 
 其中：
 - 主代理先负责仓库勘查、失败经验比对、基线契约恢复、必要时 Exa 补证、以及一次澄清
-- `paper-architect` 专门负责生成 `Method`
-- `experiment-designer` 专门负责生成 `Experiment Plan` 与 `Current Batch`
-- `idea-critic` 从审稿视角检查完整 idea，并微调 `Method`、`Experiment Plan`、`Current Batch`，同时写出 `Outcome Bar` 与 `Review Notes`
+- `paper-architect` 专门负责生成 `Method`，结束后立即写入 `.codex/active_idea.md`
+- `experiment-designer` 专门负责生成 `Experiment Plan` 与 `Current Batch`，结束后立即写入 `.codex/active_idea.md`
+- `idea-critic` 从审稿视角检查完整 idea，并微调 `Method`、`Experiment Plan`、`Current Batch`，同时写出 `Outcome Bar` 与 `Review Notes`；结束后完成最终写回
+
+discovery 期间，三个子代理的有效输出只保留在 `.codex/active_idea.md` 对应 section 中；如果后续子代理失败，discovery 会将 `.codex/active_idea.md` 重置为空模板，再返回阻塞项。
 
 如果仓库证据不足、基线字段仍无法确定、任一关键子代理失败、或者 `idea-critic` 未通过，`$idea-discovery` 会停止并指出缺失项，不会写出薄弱 idea。
 

@@ -23,6 +23,8 @@ Generate exactly one repo-grounded oral-grade deep-learning idea with a paper-le
 Use actual registered child-agent delegation for the three discovery helpers.
 Do not satisfy `paper-architect`, `experiment-designer`, or `idea-critic` locally in the parent rollout.
 If child-agent support is unavailable, stop and report that discovery cannot continue with the required helper stack.
+After each child agent finishes, write its accepted output immediately into the matching section of `.codex/active_idea.md`.
+Do not keep accepted child-agent output only in transient chat text.
 
 Execute the discovery process from @/home/zhu/workflow/for_code/.codex/idea-workflow/workflows/idea-discovery.md end-to-end.
 </process>

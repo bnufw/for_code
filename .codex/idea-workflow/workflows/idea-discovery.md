@@ -32,13 +32,14 @@ Always inspect these sources before proposing anything:
   1. `paper-architect`
   2. `experiment-designer`
   3. `idea-critic`
-- Keep helper-agent outputs transient in the turn context. Do not create repo files for intermediate drafts. Persist only the final `.codex/active_idea.md`.
+- Accepted child-agent outputs must be written into `.codex/active_idea.md` immediately after each helper finishes. Do not leave accepted helper output only in transient turn context.
 - Ask at most one batched `request_user_input` round when critical baseline fields are missing or conflicting.
 - Use that clarification round only after the caller has assembled baseline-contract candidates, and only for `baseline_commit`, main metric, baseline value, `reference_command`, and `result_locator` when the repo does not settle them cleanly.
 - If any required helper agent fails, returns missing support, or leaves a required section underspecified, stop and list the blockers instead of writing `.codex/active_idea.md`.
 - If `idea-critic` does not return `VERDICT: PASS`, stop and list the blockers instead of writing `.codex/active_idea.md`.
 - Keep the final body minimal. Use only these top-level sections: `Baseline Contract`, `Method`, `Experiment Plan`, `Current Batch`, `Outcome Bar`, `Review Notes`.
 - If multi-agent support or any registered helper agent is unavailable, stop and report the exact missing child-agent capability.
+- During staged writeback, keep `status: idle` until the final `idea-critic` pass succeeds. If discovery later stops with blockers, reset `.codex/active_idea.md` to the empty template before returning.
 
 ## Helper Agents
 
@@ -63,14 +64,15 @@ Discovery always calls these helpers in this order:
    - one repo-native reference command,
    - result locator.
 4. If any of those fields are missing or conflicting after the caller grounding step, use one batched `request_user_input` round to confirm them.
-5. Spawn the registered `paper-architect` child agent with the locked baseline contract, thesis seed, code touchpoints, thesis phenomena, and repo constraints. Wait for its final answer before continuing. Require it to return the `Method` section plus any missing support.
-6. If `paper-architect` returns missing support or fails to make the oral-grade case, stop and list the blockers.
-7. Spawn the registered `experiment-designer` child agent with the locked baseline contract, thesis seed, `Method`, code touchpoints, thesis phenomena, and repo constraints. Wait for its final answer before continuing. Require it to return `Experiment Plan`, `Current Batch`, and the frontmatter runtime fields needed for discovery writeback.
-8. If `experiment-designer` leaves `Experiment Plan`, `Current Batch`, or any required runtime field underspecified, stop and list the blockers.
-9. Spawn the registered `idea-critic` child agent on the combined proposal. Wait for its final answer before continuing. Require `VERDICT: PASS`, reviewer-style refinements for `Method`, `Experiment Plan`, and `Current Batch`, plus final `Outcome Bar` and `Review Notes`.
-10. If `idea-critic` returns revised section bodies, treat them as the final writeback values.
-11. Overwrite `.codex/active_idea.md` only if all hard rules are satisfied and `idea-critic` returns `VERDICT: PASS`.
-12. Present a concise summary to the user.
+5. Initialize `.codex/active_idea.md` with the empty template plus the locked `Baseline Contract`. Keep `status: idle`, keep runtime fields empty, and leave the unfinished sections blank.
+6. Spawn the registered `paper-architect` child agent with the locked baseline contract, thesis seed, code touchpoints, thesis phenomena, and repo constraints. Wait for its final answer before continuing. Require it to return the `Method` section plus any missing support.
+7. If `paper-architect` returns missing support or fails to make the oral-grade case, reset `.codex/active_idea.md` to the empty template and stop with blockers. Otherwise write the accepted `Method` section into `.codex/active_idea.md` immediately.
+8. Spawn the registered `experiment-designer` child agent with the locked baseline contract, thesis seed, `Method`, code touchpoints, thesis phenomena, and repo constraints. Wait for its final answer before continuing. Require it to return `Experiment Plan`, `Current Batch`, and the frontmatter runtime fields needed for discovery writeback.
+9. If `experiment-designer` leaves `Experiment Plan`, `Current Batch`, or any required runtime field underspecified, reset `.codex/active_idea.md` to the empty template and stop with blockers. Otherwise write the accepted `Experiment Plan`, `Current Batch`, and runtime fields into `.codex/active_idea.md` immediately.
+10. Spawn the registered `idea-critic` child agent on the combined proposal. Wait for its final answer before continuing. Require `VERDICT: PASS`, reviewer-style refinements for `Method`, `Experiment Plan`, and `Current Batch`, plus final `Outcome Bar` and `Review Notes`.
+11. If `idea-critic` returns `REJECT`, reset `.codex/active_idea.md` to the empty template and stop with blockers.
+12. If `idea-critic` returns revised section bodies, overwrite the staged `Method`, `Experiment Plan`, and `Current Batch` with those final values, then write `Outcome Bar`, `Review Notes`, and set `status: planned`.
+13. Present a concise summary to the user.
 
 ## Required Writeback
 
