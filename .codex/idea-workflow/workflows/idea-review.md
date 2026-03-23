@@ -131,16 +131,15 @@ Required sequence:
 
 ## Experience Entry Format
 
-Append to `experience.md` with these fields:
+Append to `experience.md` with these fields.
+Keep every field self-contained. Do not mention file paths, script names, or code locations. Record only method, settings, metric results, experiment-analysis results, observed insight, and the termination reason.
 - idea id and short title
 - date
 - baseline commit
 - related commits
-- method summary
-- code touchpoints
-- experiment scripts
-- key metrics
-- analysis summary
+- method summary, written as one concise description of the concrete method
+- key metrics, including the corresponding setting, protocol, or comparison target when needed
+- analysis summary, stating what the experiment analysis showed
 - observed insight
 - termination reason
 

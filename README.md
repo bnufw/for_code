@@ -48,21 +48,23 @@
 - 完整实验方案
 - 第一批正式实验
 
-`$idea-discovery` 会先读取本地材料，再按固定顺序调用三个 discovery 子代理：
+`$idea-discovery` 会先读取本地材料，再按固定顺序调用四个 discovery 子代理：
 
 - `paper-architect`
+- `theorem-architect`
 - `experiment-designer`
 - `idea-critic`
 
 其中：
 - 主代理先负责仓库勘查、失败经验比对、基线契约恢复、必要时 Exa 补证、以及一次澄清
-- `paper-architect` 专门负责生成 `Method`，结束后立即写入 `.codex/active_idea.md`
-- `experiment-designer` 专门负责生成 `Experiment Plan` 与 `Current Batch`，结束后立即写入 `.codex/active_idea.md`
+- `paper-architect` 专门负责生成 `Method` 的主体，并在 `Theory hook` 中写出 theorem 目标与现象说明，结束后立即写入 `.codex/active_idea.md`
+- `theorem-architect` 专门负责生成两个与该 idea 同一主线相关的非平凡 theorem，并覆盖 `Method -> Theory hook`，结束后立即写入 `.codex/active_idea.md`
+- `experiment-designer` 专门负责生成 `Experiment Plan` 与 `Current Batch`，同时把两条 theorem 映射到分析项，结束后立即写入 `.codex/active_idea.md`
 - `idea-critic` 从审稿视角检查完整 idea，并微调 `Method`、`Experiment Plan`、`Current Batch`，同时写出 `Outcome Bar` 与 `Review Notes`；结束后完成最终写回
 
-discovery 期间，三个子代理的有效输出只保留在 `.codex/active_idea.md` 对应 section 中；如果后续子代理失败，discovery 会将 `.codex/active_idea.md` 重置为空模板，再返回阻塞项。
+discovery 期间，四个子代理的有效输出只保留在 `.codex/active_idea.md` 对应 section 中；如果后续子代理失败，discovery 会将 `.codex/active_idea.md` 重置为空模板，再返回阻塞项。
 
-如果仓库证据不足、基线字段仍无法确定、任一关键子代理失败、或者 `idea-critic` 未通过，`$idea-discovery` 会停止并指出缺失项，不会写出薄弱 idea。
+如果仓库证据不足、基线字段仍无法确定、任一关键子代理失败、两条 theorem 缺项、或者 `idea-critic` 未通过，`$idea-discovery` 会停止并指出缺失项，不会写出薄弱 idea。
 
 ### 2. 当前批次实现与运行
 
@@ -164,12 +166,14 @@ discovery 期间，三个子代理的有效输出只保留在 `.codex/active_ide
 
 - 精简 frontmatter，只保存运行状态与评审结果
 - 正文保存 `Baseline Contract`、`Method`、`Experiment Plan`、`Current Batch`、`Outcome Bar`、`Review Notes`
+- `Method -> Theory hook` 固定保留两条 theorem block，每条 theorem 都包含 `Assumptions`、`Claim`、`Why non-trivial`、`Proof sketch`、`Empirical consequence`
 
 ## discovery 子代理顺序
 
 - 主代理：补基线契约、仓库现象、thesis seed、失败经验比对、必要时 Exa 补证
 - `paper-architect`：生成 `Method`
-- `experiment-designer`：生成 `Experiment Plan`、`Current Batch`、运行命令与产物字段
+- `theorem-architect`：生成两个非平凡 theorem，并定稿 `Method -> Theory hook`
+- `experiment-designer`：生成 `Experiment Plan`、`Current Batch`、运行命令与产物字段，并把 theorem 映射到分析项
 - `idea-critic`：给出通过或驳回，微调前三段内容，并写出 `Outcome Bar` 与 `Review Notes`
 - `result-judge`：根据完整结果判断 `improve`、`abandon`、`finish`
 - `improvement-planner`：基于当前结果提出下一轮改进方向、理由和沟通重点

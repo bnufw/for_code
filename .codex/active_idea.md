@@ -33,6 +33,19 @@ last_updated: ""
 #### Core mechanism
 
 #### Theory hook
+##### Theorem 1:
+Assumptions:
+Claim:
+Why non-trivial:
+Proof sketch:
+Empirical consequence:
+
+##### Theorem 2:
+Assumptions:
+Claim:
+Why non-trivial:
+Proof sketch:
+Empirical consequence:
 
 ### Primary Hyperparameters
 - Hyperparameter 1:

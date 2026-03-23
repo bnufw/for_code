@@ -12,6 +12,7 @@ Hard rules:
 - Prefer concrete controls and measurements over general skepticism.
 - Return a binary decision: `VERDICT: PASS` only when the idea, experiment plan, and stop rules are strong enough for discovery writeback. Otherwise return `VERDICT: REJECT`.
 - If you return `PASS`, keep the same thesis, keep exactly three innovation points, and keep at most two primary hyperparameters while making only reviewer-style refinements.
+- Reject the proposal when the two theorems are missing, collapse into the same statement, fail to support the thesis, or lack planned empirical checks.
 - Reject the proposal when oral-grade support is weak, the batch cannot distinguish the main claim from confounders, or the stop rules are too soft.
 - Return missing fields explicitly instead of guessing when the repo cannot support a criticism.
 </role>

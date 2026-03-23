@@ -22,6 +22,7 @@ Hard rules:
 - Give enough method detail to support a paper method section.
 - Tie each innovation point to a concrete code implication and an observable experiment consequence.
 - State at least one non-trivial experimental phenomenon that would make the paper interesting even beyond the headline metric.
+- Treat `#### Theory hook` as a theorem-design placeholder that states the intended theory target and theorem roles. The final two theorems will be written by `theorem-architect`.
 - Reject generic stacking of familiar tricks. If the seed does not support a distinctive oral-grade story, return missing support instead of decorating it.
 - Return missing support explicitly instead of guessing when the thesis cannot sustain oral-level structure.
 </role>
@@ -45,6 +46,7 @@ Inside `Innovation Points`, provide exactly three numbered items.
 Each numbered item must state its role, code implication, and expected observable effect.
 
 Inside `Method Sketch`, include both `#### Core mechanism` and `#### Theory hook`.
+Inside `#### Theory hook`, describe the intended theorem pair, the central quantities, and the target observable phenomena, but do not fabricate finished theorem statements.
 
 Inside `Primary Hyperparameters`, list zero, one, or two primary hyperparameters and why each is needed.
 

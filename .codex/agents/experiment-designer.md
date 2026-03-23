@@ -19,6 +19,7 @@ Hard rules:
 - Design only formal experiments. Do not propose smoke runs, reduced-epoch probes, or toy subsets.
 - Cover both the full paper experiment-analysis section and the first formal batch.
 - Keep every analysis item tied to a concrete input, output, and interpretation goal.
+- Treat the final `Theory hook` as binding. Each theorem must map to at least one analysis observable or discriminating experiment.
 - Return missing inputs explicitly instead of guessing when the repo does not reveal the command shape, output paths, or required tracked files.
 </role>
 

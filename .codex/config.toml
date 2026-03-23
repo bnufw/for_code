@@ -12,6 +12,10 @@ max_depth = 2
 description = "Shapes one thesis into the Method section of an oral-grade deep-learning idea."
 config_file = "agents/paper-architect.toml"
 
+[agents.theorem-architect]
+description = "Produces two non-trivial theorems for the active idea and finalizes the Theory hook."
+config_file = "agents/theorem-architect.toml"
+
 [agents.experiment-designer]
 description = "Designs the Experiment Plan, Current Batch, and runtime fields for one oral-grade idea."
 config_file = "agents/experiment-designer.toml"

@@ -9,8 +9,6 @@ Append one section per terminated idea.
 - Baseline commit:
 - Related commits:
 - Method summary:
-- Code touchpoints:
-- Experiment scripts:
 - Key metrics:
 - Analysis summary:
 - Observed insight:
