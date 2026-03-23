@@ -21,25 +21,26 @@ last_updated: ""
 - Reference command:
 - Result locator:
 
-## Paper Thesis
+## Method
+### Paper Thesis
 
-## Innovation Points
+### Innovation Points
 1.
 2.
 3.
 
-## Method Sketch
-### Core mechanism
+### Method Sketch
+#### Core mechanism
 
-### Theory hook
+#### Theory hook
 
-## Primary Hyperparameters
+### Primary Hyperparameters
 - Hyperparameter 1:
 - Hyperparameter 2:
 
-## Planned Code Changes
+## Experiment Plan
+### Planned Code Changes
 
-## Full Experiment Program
 ### Main Results
 
 ### Component Ablations
@@ -62,4 +63,3 @@ last_updated: ""
 - Current evidence:
 
 ## Review Notes
-

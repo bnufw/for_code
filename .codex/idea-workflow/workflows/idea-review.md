@@ -21,7 +21,7 @@ Always inspect:
 - `.codex/active_idea.md`
 - `.codex/baseline_commit.txt`
 - `experience.md`
-- the `Baseline Contract`, `Full Experiment Program`, `Current Batch`, `Outcome Bar`, and `Review Notes` sections in `.codex/active_idea.md`
+- the `Baseline Contract`, `Experiment Plan`, `Current Batch`, `Outcome Bar`, and `Review Notes` sections in `.codex/active_idea.md`
 - the current log file recorded in `.codex/active_idea.md`
 - the result files or result directory identified in `Baseline Contract`
 - the current `experiment_script`
@@ -31,7 +31,7 @@ Always inspect:
 
 - Base the outcome on file-backed evidence only.
 - Compare the evidence against `Baseline Contract` and `Outcome Bar` in `.codex/active_idea.md`.
-- Use `Full Experiment Program` and `Current Batch` to judge whether the evidence is enough for the current stage.
+- Use `Experiment Plan` and `Current Batch` to judge whether the evidence is enough for the current stage.
 - Use `result-judge` when the evidence is spread across many files.
 - Use `improvement-planner` before improvement clarification when the next batch is not already obvious.
 - `improve` must continue into multi-round `request_user_input` clarification in the same turn. Do not stop after merely naming `improve`.
@@ -65,7 +65,7 @@ If any of those conditions holds:
 
 - `result-judge`: chooses `improve`, `abandon`, or `finish` from completed evidence and summarizes the scorecard.
 - `improvement-planner`: turns completed evidence into 2-3 evidence-backed improvement directions, plus a clarification plan for multi-round `request_user_input`.
-- `experiment-designer`: optional after the direction is chosen, to convert the selected improvement into one repo-native batch script, experiment list, and artifact layout.
+- `experiment-designer`: optional after the direction is chosen, to refresh `Experiment Plan`, `Current Batch`, and the runtime fields for the next formal batch.
 
 ## Outcome Logic
 
@@ -77,11 +77,11 @@ Required sequence:
 1. Summarize the best observed metric, its delta from the baseline, and the most important non-trivial observation from the completed batch.
 2. Use `improvement-planner` to propose 2-3 evidence-backed improvement directions and a clarification order.
 3. Run one or more `request_user_input` rounds to choose the next direction and record why it is worth formal testing.
-4. If needed, use `experiment-designer` after the selected direction is fixed, so the next batch has one concrete script, one formal experiment list, and one batch analysis list.
+4. If needed, use `experiment-designer` after the selected direction is fixed, so the next batch has a refreshed `Experiment Plan`, one concrete script, one formal experiment list, and one batch analysis list.
 5. Rewrite `.codex/active_idea.md`:
    - keep the completed-batch evidence in `Review Notes`,
    - explain the chosen improvement direction and why it follows from the evidence,
-   - rewrite `Current Batch` with the next formal script, experiments, and batch analysis,
+   - rewrite `Experiment Plan` and `Current Batch` for the next formal step,
    - update `train_command`, `experiment_script`, and `code_touchpoints`,
    - set `status: planned`,
    - set `review_outcome: improve`,
@@ -153,4 +153,3 @@ The user-facing summary should contain:
 - the exact next step or the termination reason,
 - whether a git commit was created,
 - the cleanup targets when `abandon` is chosen.
-

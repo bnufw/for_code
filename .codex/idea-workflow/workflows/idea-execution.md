@@ -16,7 +16,8 @@ Always inspect:
 - `.codex/active_idea.md`
 - `.codex/baseline_commit.txt`
 - the files listed in `code_touchpoints`
-- the `Planned Code Changes` section
+- the `Method` section
+- the `Experiment Plan` section
 - the `Current Batch` section
 - any existing result directory or log file already recorded for the active idea
 
@@ -82,4 +83,3 @@ The user-facing summary should contain:
 - screen session name,
 - log path,
 - artifact paths recorded for later cleanup.
-

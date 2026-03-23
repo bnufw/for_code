@@ -1,24 +1,16 @@
 [features]
 codex_hooks = true
 
-[agents.repo-exa-scout]
-description = "Scouts repo code, prior failures, and Exa literature to ground one oral-grade deep-learning idea."
-config_file = "agents/repo-exa-scout.toml"
-
 [agents.paper-architect]
-description = "Shapes one thesis into an oral-grade method skeleton with three innovation points and tight hyperparameter discipline."
+description = "Shapes one thesis into the Method section of an oral-grade deep-learning idea."
 config_file = "agents/paper-architect.toml"
 
-[agents.analysis-planner]
-description = "Designs the full paper experiment program and the first batch analysis layout."
-config_file = "agents/analysis-planner.toml"
-
 [agents.experiment-designer]
-description = "Turns one active idea into a repo-native current batch, a new script plan, and an artifact layout."
+description = "Designs the Experiment Plan, Current Batch, and runtime fields for one oral-grade idea."
 config_file = "agents/experiment-designer.toml"
 
 [agents.idea-critic]
-description = "Challenges the idea with overlap checks, confounders, and a sharper value bar."
+description = "Reviews the complete idea, sharpens the writeback sections, and sets the review bar."
 config_file = "agents/idea-critic.toml"
 
 [agents.result-judge]

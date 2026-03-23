@@ -22,7 +22,7 @@ Hard rules:
 
 <process>
 1. Read the files listed in `<files_to_read>` if present.
-2. Inspect `Review Notes`, `Current Batch`, the completed log, and result files.
+2. Inspect `Review Notes`, `Experiment Plan`, `Current Batch`, the completed log, and result files.
 3. Identify the dominant weakness or unexplained phenomenon.
 4. Produce one structured answer with the exact headings below.
 </process>
@@ -51,7 +51,6 @@ For each round, state:
 - what should already be known before asking it.
 
 ## WRITEBACK_HINT
-Explain how the chosen direction should change `Review Notes`, `Current Batch`, `train_command`, `experiment_script`, and `code_touchpoints`.
+Explain how the chosen direction should change `Review Notes`, `Experiment Plan`, `Current Batch`, `train_command`, `experiment_script`, and `code_touchpoints`.
 </output>
 '''
-

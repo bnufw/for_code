@@ -48,19 +48,17 @@
 - 完整实验方案
 - 第一批正式实验
 
-`$idea-discovery` 会先读取本地材料，再按固定顺序调用五个 discovery 子代理：
+`$idea-discovery` 会先读取本地材料，再按固定顺序调用三个 discovery 子代理：
 
-- `repo-exa-scout`
 - `paper-architect`
-- `analysis-planner`
 - `experiment-designer`
 - `idea-critic`
 
 其中：
-- `paper-architect` 专门负责生成 oral 级论文主线与方法骨架
-- `analysis-planner` 专门负责完整实验与分析方案
-- `experiment-designer` 专门负责第一批正式实验与新脚本
-- `idea-critic` 专门负责压力检查
+- 主代理先负责仓库勘查、失败经验比对、基线契约恢复、必要时 Exa 补证、以及一次澄清
+- `paper-architect` 专门负责生成 `Method`
+- `experiment-designer` 专门负责生成 `Experiment Plan` 与 `Current Batch`
+- `idea-critic` 从审稿视角检查完整 idea，并微调 `Method`、`Experiment Plan`、`Current Batch`，同时写出 `Outcome Bar` 与 `Review Notes`
 
 如果仓库证据不足、基线字段仍无法确定、任一关键子代理失败、或者 `idea-critic` 未通过，`$idea-discovery` 会停止并指出缺失项，不会写出薄弱 idea。
 
@@ -163,14 +161,13 @@
 `.codex/active_idea.md` 现在采用两层结构：
 
 - 精简 frontmatter，只保存运行状态与评审结果
-- 正文保存 `Baseline Contract`、`Paper Thesis`、`Innovation Points`、`Method Sketch`、`Full Experiment Program`、`Current Batch`、`Outcome Bar`、`Review Notes`
+- 正文保存 `Baseline Contract`、`Method`、`Experiment Plan`、`Current Batch`、`Outcome Bar`、`Review Notes`
 
 ## discovery 子代理顺序
 
-- `repo-exa-scout`：补基线契约、仓库现象和 thesis seed
-- `paper-architect`：生成 oral 级论文主线、三项创新点、方法骨架
-- `analysis-planner`：生成完整实验与分析方案
-- `experiment-designer`：生成第一批正式实验、新脚本计划、产物安排
-- `idea-critic`：给出通过或驳回，检查重合、混杂因素、论文支撑力度、停止条件
+- 主代理：补基线契约、仓库现象、thesis seed、失败经验比对、必要时 Exa 补证
+- `paper-architect`：生成 `Method`
+- `experiment-designer`：生成 `Experiment Plan`、`Current Batch`、运行命令与产物字段
+- `idea-critic`：给出通过或驳回，微调前三段内容，并写出 `Outcome Bar` 与 `Review Notes`
 - `result-judge`：根据完整结果判断 `improve`、`abandon`、`finish`
 - `improvement-planner`：基于当前结果提出下一轮改进方向、理由和沟通重点
