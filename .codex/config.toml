@@ -1,5 +1,12 @@
 [features]
 codex_hooks = true
+multi_agent = true
+child_agents_md = true
+default_mode_request_user_input = true
+
+[agents]
+max_threads = 3
+max_depth = 2
 
 [agents.paper-architect]
 description = "Shapes one thesis into the Method section of an oral-grade deep-learning idea."
