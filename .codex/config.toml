@@ -13,16 +13,12 @@ description = "Shapes one thesis into the Method section of an oral-grade deep-l
 config_file = "agents/paper-architect.toml"
 
 [agents.theorem-architect]
-description = "Produces two non-trivial theorems for the active idea and finalizes the Theory hook."
+description = "Produces two non-trivial theorems with full proofs for the active idea and finalizes the Theory hook."
 config_file = "agents/theorem-architect.toml"
 
 [agents.experiment-designer]
 description = "Designs the Experiment Plan, Current Batch, and runtime fields for one oral-grade idea."
 config_file = "agents/experiment-designer.toml"
-
-[agents.idea-critic]
-description = "Reviews the complete idea, sharpens the writeback sections, and sets the review bar."
-config_file = "agents/idea-critic.toml"
 
 [agents.result-judge]
 description = "Reads completed-batch evidence and returns improve, abandon, or finish."

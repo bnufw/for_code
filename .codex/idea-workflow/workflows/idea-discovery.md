@@ -32,24 +32,23 @@ Always inspect these sources before proposing anything:
   1. `paper-architect`
   2. `theorem-architect`
   3. `experiment-designer`
-  4. `idea-critic`
 - Accepted child-agent outputs must be written into `.codex/active_idea.md` immediately after each helper finishes. Do not leave accepted helper output only in transient turn context.
 - Ask at most one batched `request_user_input` round when critical baseline fields are missing or conflicting.
 - Use that clarification round only after the caller has assembled baseline-contract candidates, and only for `baseline_commit`, main metric, baseline value, `reference_command`, and `result_locator` when the repo does not settle them cleanly.
 - If any required helper agent fails, returns missing support, or leaves a required section underspecified, stop and list the blockers instead of writing `.codex/active_idea.md`.
-- Treat the theorem pass as a hard gate. Discovery stops when `theorem-architect` fails to produce exactly two non-trivial theorems or leaves any theorem without `Assumptions`, `Claim`, `Why non-trivial`, `Proof sketch`, or `Empirical consequence`.
-- If `idea-critic` does not return `VERDICT: PASS`, stop and list the blockers instead of writing `.codex/active_idea.md`.
+- Treat the theorem pass as a hard gate. Discovery stops when `theorem-architect` fails to produce exactly two non-trivial theorems or leaves any theorem without `Assumptions`, `Claim`, `Why non-trivial`, `Full proof`, or `Empirical consequence`.
+- Treat the theorem pass as a method-stage formalization step. After `paper-architect` finishes, theorem content must serve the staged `Method` section rather than re-open repository code details.
 - Keep the final body minimal. Use only these top-level sections: `Baseline Contract`, `Method`, `Experiment Plan`, `Current Batch`, `Outcome Bar`, `Review Notes`.
 - If multi-agent support or any registered helper agent is unavailable, stop and report the exact missing child-agent capability.
-- During staged writeback, keep `status: idle` until the final `idea-critic` pass succeeds. If discovery later stops with blockers, reset `.codex/active_idea.md` to the empty template before returning.
+- During staged writeback, keep `status: idle` until the caller finishes the final synthesis step. If discovery later stops with blockers, reset `.codex/active_idea.md` to the empty template before returning.
 
 ## Helper Agents
 
 Discovery always calls these helpers in this order:
 - `paper-architect`: oral-grade thesis shaping and `Method`.
-- `theorem-architect`: two non-trivial theorems that finalize `Method -> Theory hook`.
+- `theorem-architect`: two non-trivial theorems with full proofs that finalize `Method -> Theory hook` for the already-written method section.
 - `experiment-designer`: oral-grade `Experiment Plan`, repo-native `Current Batch`, and discovery-time runtime fields, grounded in the finalized `Theory hook`.
-- `idea-critic`: reviewer-style pressure check plus final refinements for `Method`, `Experiment Plan`, `Current Batch`, `Outcome Bar`, and `Review Notes`.
+After those three helpers finish, the caller writes `Outcome Bar` and `Review Notes` from the accepted proposal, the locked baseline contract, and `experience.md`.
 
 ## Process
 
@@ -70,13 +69,13 @@ Discovery always calls these helpers in this order:
 5. Initialize `.codex/active_idea.md` with the empty template plus the locked `Baseline Contract`. Keep `status: idle`, keep runtime fields empty, and leave the unfinished sections blank.
 6. Spawn the registered `paper-architect` child agent with the locked baseline contract, thesis seed, code touchpoints, thesis phenomena, and repo constraints. Wait for its final answer before continuing. Require it to return the `Method` section plus any missing support.
 7. If `paper-architect` returns missing support or fails to make the oral-grade case, reset `.codex/active_idea.md` to the empty template and stop with blockers. Otherwise write the accepted `Method` section into `.codex/active_idea.md` immediately.
-8. Spawn the registered `theorem-architect` child agent with the locked baseline contract, thesis seed, staged `Method`, code touchpoints, thesis phenomena, and repo constraints. Wait for its final answer before continuing. Require it to return `THEORY_HOOK`, `THEOREM_CHECKLIST`, and any missing support.
-9. If `theorem-architect` leaves fewer than two theorems, repeats the same theorem twice, leaves any required theorem field blank, or fails to tie the theorems back to the thesis, code touchpoints, and measurable phenomena, reset `.codex/active_idea.md` to the empty template and stop with blockers. Otherwise overwrite `Method -> Theory hook` with the accepted theorem block immediately.
+8. Spawn the registered `theorem-architect` child agent with the locked baseline contract, thesis seed, staged `Method`, and thesis phenomena. Wait for its final answer before continuing. Require it to return `THEORY_HOOK`, `THEOREM_CHECKLIST`, and any missing support.
+9. If `theorem-architect` leaves fewer than two theorems, repeats the same theorem twice, leaves any required theorem field blank, or fails to tie the theorems back to the thesis, the staged `Method`, and measurable phenomena, reset `.codex/active_idea.md` to the empty template and stop with blockers. Otherwise overwrite `Method -> Theory hook` with the accepted theorem block immediately.
 10. Spawn the registered `experiment-designer` child agent with the locked baseline contract, thesis seed, staged `Method`, code touchpoints, thesis phenomena, and repo constraints. Wait for its final answer before continuing. Require it to return `Experiment Plan`, `Current Batch`, and the frontmatter runtime fields needed for discovery writeback.
 11. If `experiment-designer` leaves `Experiment Plan`, `Current Batch`, or any required runtime field underspecified, reset `.codex/active_idea.md` to the empty template and stop with blockers. Otherwise write the accepted `Experiment Plan`, `Current Batch`, and runtime fields into `.codex/active_idea.md` immediately.
-12. Spawn the registered `idea-critic` child agent on the combined proposal. Wait for its final answer before continuing. Require `VERDICT: PASS`, reviewer-style refinements for `Method`, `Experiment Plan`, and `Current Batch`, plus final `Outcome Bar` and `Review Notes`.
-13. If `idea-critic` returns `REJECT`, reset `.codex/active_idea.md` to the empty template and stop with blockers.
-14. If `idea-critic` returns revised section bodies, overwrite the staged `Method`, `Experiment Plan`, and `Current Batch` with those final values, then write `Outcome Bar`, `Review Notes`, and set `status: planned`.
+12. The caller synthesizes `Outcome Bar` and `Review Notes` from the locked baseline contract, `experience.md`, and the accepted `Method`, `Experiment Plan`, and `Current Batch`. Keep the staged helper outputs unchanged unless a concrete contradiction must be corrected.
+13. If the caller cannot state crisp thresholds for `Outcome Bar` or cannot explain overlap control and confounder control in `Review Notes`, reset `.codex/active_idea.md` to the empty template and stop with blockers.
+14. Write `Outcome Bar`, `Review Notes`, and set `status: planned`.
 15. Present a concise summary to the user.
 
 ## Required Writeback
@@ -118,7 +117,7 @@ Also fill the body sections:
   - `Assumptions`
   - `Claim`
   - `Why non-trivial`
-  - `Proof sketch`
+  - `Full proof`
   - `Empirical consequence`
 - `Experiment Plan` must include:
   - `Planned Code Changes`
@@ -135,7 +134,7 @@ Also fill the body sections:
   - `Abandon when`
   - `Finish when`
   - `Current evidence`
-- `Review Notes` must state the discovery-time reviewer assessment, key confounder controls, and why this idea differs from the failed ideas already recorded in `experience.md`.
+- `Review Notes` must state the discovery-time proposal assessment, key confounder controls, and why this idea differs from the failed ideas already recorded in `experience.md`.
 
 Set `train_command` to the planned launch command for the new experiment script, not to the old baseline command.
 

@@ -37,14 +37,14 @@ last_updated: ""
 Assumptions:
 Claim:
 Why non-trivial:
-Proof sketch:
+Full proof:
 Empirical consequence:
 
 ##### Theorem 2:
 Assumptions:
 Claim:
 Why non-trivial:
-Proof sketch:
+Full proof:
 Empirical consequence:
 
 ### Primary Hyperparameters
